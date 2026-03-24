@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Study Plan Generator</title>
+    <!-- Google Fonts for typography matching the main site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0A1A3B;
+            --navy-dark: #060F22;
+            --white: #FFFFFF;
+            --off-white: #F7F8FA;
+            --text: #0D0D0D;
+            --text-muted: #4A4A4A;
+            --border: #E5E7EB;
+            --primary: #3B82F6;
+            
+            /* Day Type Colors */
+            --color-test: #fee2e2;
+            --color-test-border: #ef4444;
+            --color-review: #e0f2fe;
+            --color-review-border: #3b82f6;
+            --color-reading: #dcfce7;
+            --color-reading-border: #22c55e;
+            --color-practice: #ffedd5;
+            --color-practice-border: #f97316;
+            --color-light: #f3f4f6;
+            --color-light-border: #6b7280;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background-color: var(--off-white);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="date"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            background-color: var(--white);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 1.2rem;
+            height: 1.2rem;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background-color: var(--navy-dark);
+        }
+
+        .btn-print {
+            background-color: var(--primary);
+            margin-bottom: 2rem;
+            display: none; /* Hidden until generated */
+        }
+        
+        .btn-print:hover {
+            background-color: #2563eb;
+        }
+
+        /* Generated Plan Styles */
+        #planOutput {
+            display: none; /* Hidden until generated */
+        }
+
+        .week-container {
+            background-color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .week-header {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .week-header h3 {
+            color: var(--white);
+            margin: 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .week-header::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .week-container.active .week-header::after {
+            transform: rotate(180deg);
+        }
+
+        .week-content {
+            display: none;
+            padding: 1.5rem;
+        }
+
+        .week-container.active .week-content {
+            display: block;
+        }
+
+        .day-card {
+            border-left: 4px solid var(--border);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: var(--off-white);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .day-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .day-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .day-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Day Type Themes */
+        .type-test {
+            background-color: var(--color-test);
+            border-left-color: var(--color-test-border);
+        }
+        .type-test .day-badge { background-color: var(--color-test-border); color: white; }
+
+        .type-review {
+            background-color: var(--color-review);
+            border-left-color: var(--color-review-border);
+        }
+        .type-review .day-badge { background-color: var(--color-review-border); color: white; }
+
+        .type-reading {
+            background-color: var(--color-reading);
+            border-left-color: var(--color-reading-border);
+        }
+        .type-reading .day-badge { background-color: var(--color-reading-border); color: white; }
+
+        .type-practice {
+            background-color: var(--color-practice);
+            border-left-color: var(--color-practice-border);
+        }
+        .type-practice .day-badge { background-color: var(--color-practice-border); color: white; }
+
+        .type-light {
+            background-color: var(--color-light);
+            border-left-color: var(--color-light-border);
+        }
+        .type-light .day-badge { background-color: var(--color-light-border); color: white; }
+
+        .task-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .task-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .task-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--navy);
+            font-weight: bold;
+        }
+
+        .meta-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .vocab-box {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.6);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            border: 1px dashed var(--border);
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background-color: white; }
+            .card.setup-card, .btn-print, .week-header::after { display: none !important; }
+            .week-content { display: block !important; }
+            .week-container { border: none; margin-bottom: 2rem; page-break-inside: avoid; }
+            .week-header { background-color: #f3f4f6; color: black; border-bottom: 2px solid black; }
+            .week-header h3 { color: black; }
+            .day-card { page-break-inside: avoid; border: 1px solid #ccc; border-left-width: 4px; }
+            .container { padding: 0; max-width: 100%; }
+        }
+
+        @media (max-width: 600px) {
+            .day-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="margin-bottom: 1.5rem;">
+        <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">← Back to Main Site</a>
+    </div>
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1>SAT Study Plan Generator</h1>
+        <p class="text-muted">Targeted practice, deep review, and consistency.</p>
+    </div>
+
+    <!-- Setup Form -->
+    <div class="card setup-card">
+        <form id="planForm">
+            <div class="form-group">
+                <label for="testDate">Official Test Date *</label>
+                <input type="date" id="testDate" required>
+            </div>
+
+            <!-- Anti-Spam Honeypot (Hidden from users) -->
+            <div style="opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1;">
+                <input type="text" id="hp_field" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label>Available Study Days Per Week *</label>
+                <div class="checkbox-group" id="daysGroup">
+                    <label class="checkbox-label"><input type="checkbox" value="Monday" checked> Mon</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Tuesday" checked> Tue</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Wednesday" checked> Wed</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Thursday" checked> Thu</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Friday" checked> Fri</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Saturday"> Sat</label>
+                    <label class="checkbox-label"><input type="checkbox" value="Sunday"> Sun</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="studentLevel">Current Level *</label>
+                <select id="studentLevel" required>
+                    <option value="Beginner">Beginner (Under 1100)</option>
+                    <option value="Intermediate">Intermediate (1100 - 1350)</option>
+                    <option value="Advanced">Advanced (1350+)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Available Resources</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-label"><input type="checkbox" id="resBluebook" checked> Bluebook App</label>
+                    <label class="checkbox-label"><input type="checkbox" id="resOneprep" checked> OnePrep (or similar)</label>
+                    <label class="checkbox-label"><input type="checkbox" id="resAeon" checked> Aeon Essays</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="targetScore">Target Score (Optional)</label>
+                <input type="text" id="targetScore" placeholder="e.g. 1500+">
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%;">Generate My Plan</button>
+        </form>
+    </div>
+
+    <!-- Actions -->
+    <button class="btn btn-print" id="printBtn" onclick="window.print()">Print Plan</button>
+
+    <!-- Plan Output -->
+    <div id="planOutput">
+        <!-- Rendered via JS -->
+    </div>
+</div>
+
+<script>
+    document.getElementById('planForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        generatePlan();
+    });
+
+    // Toggle accordions
+    document.addEventListener('click', function(e) {
+        if(e.target.closest('.week-header')) {
+            const container = e.target.closest('.week-container');
+            container.classList.toggle('active');
+        }
+    });
+
+    async function generatePlan() {
+        // Collect Inputs
+        const testDateInput = document.getElementById('testDate').value;
+        if (!testDateInput) return;
+        
+        const selectedDays = Array.from(document.querySelectorAll('#daysGroup input:checked')).map(cb => cb.value);
+        if (selectedDays.length === 0) {
+            alert('Please select at least one study day.');
+            return;
+        }
+
+        const dateNow = new Date();
+        const testDate = new Date(testDateInput);
+        const timeDiff = testDate.getTime() - dateNow.getTime();
+        let weeksDiff = Math.ceil(timeDiff / (1000 * 3600 * 24 * 7));
+
+        if (weeksDiff <= 0) {
+            alert('Test date must be in the future.');
+            return;
+        }
+
+        const level = document.getElementById('studentLevel').value;
+        const targetScore = document.getElementById('targetScore').value;
+        
+        const resources = [];
+        if(document.getElementById('resBluebook')?.checked) resources.push('Bluebook App');
+        if(document.getElementById('resOneprep')?.checked) resources.push('OnePrep');
+        if(document.getElementById('resAeon')?.checked) resources.push('Aeon Essays');
+
+        const planOutput = document.getElementById('planOutput');
+        const submitBtn = document.querySelector('#planForm button');
+        const originalBtnText = submitBtn.innerHTML;
+
+        // UI Loading State
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '🤖 Analyzing profile and building schedule... (approx. 5s)';
+        planOutput.style.display = 'block';
+        planOutput.innerHTML = `
+            <div style="text-align: center; padding: 3rem; background: var(--white); border-radius: 8px; border: 1px solid var(--border);">
+                <div style="font-size: 2rem; margin-bottom: 1rem;">⚙️</div>
+                <h3 style="color: var(--navy); margin-bottom: 0.5rem;">AI Architect Working...</h3>
+                <p class="text-muted">Structuring a ${weeksDiff > 12 ? 12 : weeksDiff}-week plan to maximize your score.</p>
+            </div>
+        `;
+        planOutput.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        try {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    testDate: testDateInput,
+                    selectedDays,
+                    level,
+                    resources,
+                    targetScore,
+                    hp: hp_field // Include honeypot field in the request body
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to connect to the AI engine.');
+            }
+
+            renderPlan(data);
+
+        } catch (err) {
+            planOutput.innerHTML = `
+                <div style="background-color: #fee2e2; color: #b91c1c; padding: 1.5rem; border-radius: 8px; text-align: center; border: 1px solid #f87171;">
+                    <h3>Error Generating Plan</h3>
+                    <p>${err.message}</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">Make sure you have added your GEMINI_API_KEY to your Vercel Environment Variables.</p>
+                </div>
+            `;
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        }
+    }
+
+    function getDayTypeClass(type) {
+        if (!type) return 'type-light';
+        const t = type.toLowerCase();
+        if (t.includes('test')) return 'type-test';
+        if (t.includes('review') && !t.includes('light')) return 'type-review';
+        if (t.includes('reading')) return 'type-reading';
+        if (t.includes('practice')) return 'type-practice';
+        if (t.includes('light')) return 'type-light';
+        return 'type-light'; 
+    }
+
+    function renderPlan(planData) {
+        const planOutput = document.getElementById('planOutput');
+        let html = `<h2 style="margin-bottom: 2rem; border-bottom: 2px solid var(--navy); padding-bottom: 0.5rem;">${planData.planTitle || 'Your Custom Mastery Plan'}</h2>`;
+
+        if (!planData.weeks || planData.weeks.length === 0) {
+            throw new Error("AI returned an empty plan.");
+        }
+
+        planData.weeks.forEach((week, wIndex) => {
+            html += `
+                <div class="week-container ${wIndex === 0 ? 'active' : ''}">
+                    <div class="week-header">
+                        <h3>${week.title || \`Week \${week.weekNumber}\`}</h3>
+                    </div>
+                    <div class="week-content">
+            `;
+
+            if (week.days && week.days.length > 0) {
+                week.days.forEach(day => {
+                    const bgClass = getDayTypeClass(day.type);
+                    
+                    html += `
+                        <div class="day-card ${bgClass}">
+                            <div class="day-header">
+                                <span class="day-title">${day.dayName}</span>
+                                <span class="day-badge">${day.type}</span>
+                            </div>
+                            <div class="meta-info">⏱ ${day.duration} &nbsp;|&nbsp; 🎯 Focus: ${day.focus}</div>
+                            <ul class="task-list">
+                                ${day.tasks.map(t => \`<li>\${t}</li>\`).join('')}
+                            </ul>
+                    `;
+
+                    if (day.hasVocab) {
+                        html += `
+                            <div class="vocab-box">
+                                <strong>Daily Vocab Mission:</strong> Learn 5 new words today.<br>
+                                <em>Format:</em> Word → English Definition → Arabic Translation → Example Sentence.
+                            </div>
+                        `;
+                    }
+
+                    html += \`</div>\`; // Close day-card
+                });
+            } else {
+                html += \`<p class="text-muted">No specific tasks scheduled for this week. Use this time for light review.</p>\`;
+            }
+
+            html += `
+                    </div>
+                </div>
+            `;
+        });
+
+        planOutput.innerHTML = html;
+        document.getElementById('printBtn').style.display = 'inline-block';
+    }
+</script>
+
+</body>
+</html>

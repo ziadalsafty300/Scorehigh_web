@@ -1,0 +1,9 @@
+{
+  "name": "scorehigh-tutoring",
+  "version": "1.0.0",
+  "description": "ScoreHigh Tutoring Website",
+  "main": "index.html",
+  "dependencies": {
+    "resend": "^3.2.0"
+  }
+}

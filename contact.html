@@ -17,6 +17,7 @@
       <div class="nav-links">
         <a href="services.html" class="nav-link">Services</a>
         <a href="resources.html" class="nav-link">Resources</a>
+        <a href="plan-generator.html" class="nav-link" style="color: var(--primary); font-weight: 700;">AI Plan</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="contact.html" class="nav-link active">Contact</a>
       </div>
@@ -65,7 +66,7 @@
                 <select id="targetTest" name="targetTest" style="width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 1rem; background-color: var(--white);">
                   <option value="">Select Program...</option>
                   <option value="group">Online Group Course (SAT)</option>
-                  <option value="private">1-on-1 Tutoring (SAT)</option>
+                  <option value="private">Elite Self-Study Coaching</option>
                   <option value="unsure">Not Sure</option>
                 </select>
               </div>
@@ -81,10 +82,15 @@
               <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 1rem; resize: vertical;"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-large" style="width: 100%; border: none; text-align: center; padding-top: 0.8rem; padding-bottom: 0.8rem;">
+            <button type="submit" id="submitBtn" class="btn btn-primary btn-large" style="width: 100%; border: none; text-align: center; padding-top: 0.8rem; padding-bottom: 0.8rem;">
               <span style="display: block; line-height: 1.2;">Send Message</span>
               <span class="arabic-btn-text" lang="ar" style="color: rgba(255,255,255,0.8);">إرسال رسالة</span>
             </button>
+            
+            <!-- Form Feedback Messages -->
+            <div id="formReview" style="display: none; margin-top: 1.5rem; padding: 1rem; border-radius: 6px; text-align: center; font-weight: 500;">
+              <!-- Success or Error text will be injected here via JS -->
+            </div>
             
           </form>
 
@@ -120,11 +126,11 @@
         <div class="footer-social">
           <a href="https://www.tiktok.com/@scorehightutoring?_r=1&_t=ZS-94vPqWmJWB3" target="_blank" rel="noopener">TikTok</a>
           <a href="https://wa.me/message/WRGJCSTOP3HEO1" target="_blank" rel="noopener">WhatsApp (01599906731)</a>
-          <a href="mailto:hello@scorehigh.com">hello@scorehigh.com</a>
+          <a href="mailto:tutoringscorehigh@gmail.com">tutoringscorehigh@gmail.com</a>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 ScoreHigh Tutoring. All rights reserved.</p>
+        <p>© 2025 ScoreHigh Tutoring. All rights reserved. <a href="legal.html" style="text-decoration: underline; margin-left:1rem;">Terms & Privacy</a></p>
         <p class="arabic-footer" dir="rtl" lang="ar">نرحب بالطلاب من جميع أنحاء العالم</p>
       </div>
     </div>
