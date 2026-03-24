@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScoreHigh Tutoring | Score Higher. Study Smarter.</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="nav-brand">
+        ScoreHigh
+      </a>
+      
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        ☰
+      </button>
+
+      <div class="nav-links">
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Section 1 - Hero -->
+    <section class="section section-hero bg-white text-center" style="position: relative; overflow: hidden;">
+      <div class="container" style="max-width: 800px; position: relative; z-index: 1;">
+        <!-- EDIT: Main headline -->
+        <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1.5rem;">Score Higher. Study Smarter. Start Today.</h1>
+        <!-- EDIT: Subheadline -->
+        <p class="text-muted" style="font-size: 1.25rem; margin-bottom: 2.5rem;">ScoreHigh Tutoring helps students master the Digital SAT with online group courses and proven strategies—taught by a tutor who's been exactly where you are.</p>
+        
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+          <a href="contact.html" class="btn btn-primary btn-large" style="text-align: center; padding-top: 0.6rem; padding-bottom: 0.6rem;">
+            <span style="display: block; line-height: 1.2;">Book a Free Consultation</span>
+            <span class="arabic-btn-text" lang="ar">احجز استشارة مجانية</span>
+          </a>
+          <a href="https://wa.me/message/WRGJCSTOP3HEO1" target="_blank" rel="noopener" class="btn btn-whatsapp btn-large" style="display: flex; align-items: center;">Book a Course via WhatsApp</a>
+        </div>
+        
+        <!-- EDIT: Arabic hero banner text -->
+        <p dir="rtl" lang="ar" class="text-navy" style="font-size: 0.9rem; opacity: 0.8; font-weight: 500;">
+          نساعد الطلاب الدوليين على تحقيق نتائج حقيقية في اختبار SAT الرقمي
+        </p>
+      </div>
+      <!-- Background subtle pattern/gradient -->
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 30%, rgba(10, 26, 59, 0.03) 0%, rgba(255,255,255,0) 70%); z-index: 0; pointer-events: none;"></div>
+    </section>
+
+    <!-- Section 2 - Social Proof Bar -->
+    <section class="bg-navy" style="padding: 3rem 0;">
+      <div class="container">
+        <div class="grid grid-4 text-center text-white" style="gap: 1rem;">
+          <div style="border-right: 1px solid rgba(255,255,255,0.2);">
+            <!-- EDIT: Stat 1 -->
+            <div style="font-family: var(--font-heading); font-size: 3rem; margin-bottom: 0.5rem;">Top 1%</div>
+            <div style="font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8;">SAT Scores Achieved</div>
+          </div>
+          <div style="border-right: 1px solid rgba(255,255,255,0.2);">
+            <!-- EDIT: Stat 2 -->
+            <div style="font-family: var(--font-heading); font-size: 3rem; margin-bottom: 0.5rem;">1500+</div>
+            <div style="font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8;">Target Scores Hit</div>
+          </div>
+          <div style="border-right: 1px solid rgba(255,255,255,0.2);">
+            <!-- EDIT: Stat 3 -->
+            <div style="font-family: var(--font-heading); font-size: 3rem; margin-bottom: 0.5rem;">100s</div>
+            <div style="font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8;">Middle Eastern Students Helped</div>
+          </div>
+          <div>
+            <!-- EDIT: Stat 4 -->
+            <div style="font-family: var(--font-heading); font-size: 3rem; margin-bottom: 0.5rem;">11K+</div>
+            <div style="font-family: var(--font-body); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8;">TikTok Followers</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Inline CSS override for mobile social proof bar dividers -->
+    <style>
+      @media (max-width: 992px) {
+        .grid-4 > div { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2rem; }
+        .grid-4 > div:last-child { border-bottom: none; padding-bottom: 0; }
+        .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        .grid-4 > div:nth-child(even) { border-bottom: 1px solid rgba(255,255,255,0.2); }
+      }
+      @media (max-width: 768px) {
+        .grid-4 { grid-template-columns: 1fr; }
+      }
+    </style>
+
+    <!-- Section 3 - Services Snapshot -->
+    <section class="section bg-off-white">
+      <div class="container">
+        <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 3rem;">What We Offer</h2>
+        <div class="grid grid-2" style="gap: 2rem;">
+          
+          <!-- EDIT: Service Card 1 -->
+          <div class="card">
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.8rem;">Online Group Courses</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem;">Master the Digital SAT alongside driven peers. Interactive lessons, focused pacing, and structured strategy to guarantee results.</p>
+            <a href="services.html" class="text-navy" style="font-weight: 600;">Explore Program →</a>
+          </div>
+
+          <!-- EDIT: Service Card 2 -->
+          <div class="card">
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.8rem;">1-on-1 Tutoring</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem;">Personalized deep-dives into your weakest areas, ensuring every hour translates to score improvements.</p>
+            <a href="services.html" class="text-navy" style="font-weight: 600;">Learn More →</a>
+          </div>
+
+          <!-- EDIT: Service Card 3 -->
+          <div class="card">
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.8rem;">Vocabulary & Context</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem;">Expand your academic English vocabulary mapping specifically to the most tested words on the Digital SAT.</p>
+            <a href="services.html" class="text-navy" style="font-weight: 600;">Learn More →</a>
+          </div>
+
+          <!-- EDIT: Service Card 4 -->
+          <div class="card">
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.8rem;">Reading & Writing Mastery</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem;">Crack the code on grammar rules and reading logic to secure points on every single passage format.</p>
+            <a href="services.html" class="text-navy" style="font-weight: 600;">Learn More →</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4 - Who I Help -->
+    <section class="section bg-white">
+      <div class="container">
+        <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 3rem;">Who ScoreHigh Is For</h2>
+        <div class="grid grid-3">
+          
+          <!-- EDIT: Column 1 -->
+          <div>
+            <h3 style="font-size: 1.5rem;">For Students</h3>
+            <p class="text-muted">You're ambitious and want a real score improvement — not just worksheets and busywork.</p>
+          </div>
+
+          <!-- EDIT: Column 2 -->
+          <div>
+            <h3 style="font-size: 1.5rem;">For Parents</h3>
+            <p class="text-muted">You want a tutor with proven results and a clear, structured method you can trust.</p>
+          </div>
+
+          <!-- EDIT: Column 3 -->
+          <div>
+            <h3 style="font-size: 1.5rem;">For International Students</h3>
+            <p class="text-muted" style="margin-bottom: 1rem;">English-heavy tests don't have to hold you back. ScoreHigh is built for you.</p>
+            <!-- EDIT: Arabic note for international students -->
+            <p dir="rtl" lang="ar" class="text-navy" style="font-size: 0.95rem; font-weight: 500;">
+              نعمل مع طلاب من الشرق الأوسط وندرك التحديات الخاصة بهم
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5 - About Snapshot -->
+    <section class="section bg-off-white">
+      <div class="container">
+        <div class="grid grid-2" style="align-items: center; gap: 4rem;">
+          <div style="order: 2;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">A Tutor Who Gets It</h2>
+            <!-- EDIT: Tutor bio paragraph -->
+            <p class="text-muted" style="margin-bottom: 2rem; font-size: 1.1rem;">
+              I'm the founder of ScoreHigh Tutoring — a tutor, a strategist, and a student myself. I've scored a 36 on ACT English, helped hundreds of Middle Eastern students reach their target scores, and built a community of 11,000+ students on TikTok. I don't just teach the test — I teach you how to think through it.
+            </p>
+            <a href="about.html" class="text-navy" style="font-weight: 600; font-size: 1.1rem;">Meet the Tutor →</a>
+          </div>
+          <div style="order: 1;">
+            <!-- EDIT: Replace with actual tutor image. -->
+            <img src="images/tutor.jpeg" alt="Tutor" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 8px; box-shadow: 0 10px 30px rgba(10, 26, 59, 0.1); background-color: var(--navy);">
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Inline CSS for About Snapshot mobile order -->
+    <style>
+      @media (max-width: 768px) {
+        .grid-2 > div[style*="order: 2"] { order: 1 !important; }
+        .grid-2 > div[style*="order: 1"] { order: 2 !important; }
+      }
+    </style>
+
+    <!-- Section 6 - Testimonials -->
+    <section class="section bg-white">
+      <div class="container">
+        <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 3rem;">What Students Are Saying</h2>
+        <div class="grid grid-3">
+          
+          <!-- EDIT: Testimonial 1 -->
+          <div class="card testimonial-card">
+            <p class="text-muted" style="margin-bottom: 1.5rem; font-style: italic;">
+              "[Student testimonial placeholder — replace with real quote. Very helpful strategies!]"
+            </p>
+            <p style="font-weight: 700; color: var(--navy);">Student Name, Country</p>
+          </div>
+
+          <!-- EDIT: Testimonial 2 -->
+          <div class="card testimonial-card">
+            <p class="text-muted" style="margin-bottom: 1.5rem; font-style: italic;">
+              "[Student testimonial placeholder — replace with real quote. Brought my score up 200 points.]"
+            </p>
+            <p style="font-weight: 700; color: var(--navy);">Student Name, Country</p>
+          </div>
+
+          <!-- EDIT: Testimonial 3 -->
+          <div class="card testimonial-card">
+            <p class="text-muted" style="margin-bottom: 1.5rem; font-style: italic;">
+              "[Student testimonial placeholder — replace with real quote. Highly recommended for international students.]"
+            </p>
+            <p style="font-weight: 700; color: var(--navy);">Student Name, Country</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7 - Free Resources Teaser -->
+    <section class="section bg-navy text-white text-center">
+      <div class="container">
+        <h2 class="text-white" style="font-size: 2.5rem; margin-bottom: 1rem;">Free ScoreHigh Resources</h2>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom: 3rem; font-size: 1.1rem; max-width: 600px; margin-left: auto; margin-right: auto;">Download free study sheets, vocabulary guides, and practice questions — no sign-up needed.</p>
+        
+        <div class="grid grid-3" style="margin-bottom: 3rem; text-align: left;">
+          
+          <!-- EDIT: Resource Teaser 1 -->
+          <div class="card" style="color: var(--text);">
+            <h3 style="font-size: 1.25rem;">SAT Tip Sheet</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.95rem;">Top strategies for SAT English</p>
+            <a href="resources.html" class="btn btn-outline" style="width: 100%; display: block;">Download Free</a>
+          </div>
+
+          <!-- EDIT: Resource Teaser 2 -->
+          <div class="card" style="color: var(--text);">
+            <h3 style="font-size: 1.25rem;">Vocabulary Sheet</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.95rem;">High-frequency SAT words for international students</p>
+            <a href="resources.html" class="btn btn-outline" style="width: 100%; display: block;">Download Free</a>
+          </div>
+
+          <!-- EDIT: Resource Teaser 3 -->
+          <div class="card" style="color: var(--text);">
+            <h3 style="font-size: 1.25rem;">Practice Questions</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.95rem;">Free SAT practice with answer explanations</p>
+            <a href="resources.html" class="btn btn-outline" style="width: 100%; display: block;">Download Free</a>
+          </div>
+
+        </div>
+
+        <a href="resources.html" style="font-weight: 600; color: var(--white); text-decoration: underline; font-size: 1.1rem;">See All Resources →</a>
+      </div>
+    </section>
+
+    <!-- Section 8 - Final CTA -->
+    <section class="section bg-off-white text-center">
+      <div class="container">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to ScoreHigh?</h2>
+        <p class="text-muted" style="font-size: 1.2rem; margin-bottom: 2rem;">Let's build your plan — book a free consultation or discover prices for our courses today.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="contact.html" class="btn btn-primary btn-large" style="text-align: center; padding-top: 0.6rem; padding-bottom: 0.6rem;">
+            <span style="display: block; line-height: 1.2;">Book a Free Consultation</span>
+            <span class="arabic-btn-text" lang="ar" style="color: rgba(255,255,255,0.8);">احجز استشارة مجانية</span>
+          </a>
+          <a href="https://wa.me/message/WRGJCSTOP3HEO1" target="_blank" rel="noopener" class="btn btn-whatsapp btn-large" style="display: flex; align-items: center;">Find out prices via WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <!-- EDIT: Footer logo/brand -->
+          <h3 style="margin-bottom: 0.5rem;">ScoreHigh</h3>
+          <p>Made By Students For Students</p>
+        </div>
+        
+        <div class="footer-links">
+          <a href="services.html">Services</a>
+          <a href="resources.html">Resources</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        
+        <div class="footer-social">
+          <!-- EDIT: Footer social links -->
+          <a href="https://www.tiktok.com/@scorehightutoring?_r=1&_t=ZS-94vPqWmJWB3" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://wa.me/message/WRGJCSTOP3HEO1" target="_blank" rel="noopener">WhatsApp (01599906731)</a>
+          <a href="mailto:hello@scorehigh.com">hello@scorehigh.com</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2025 ScoreHigh Tutoring. All rights reserved.</p>
+        <!-- EDIT: Footer Arabic disclaimer -->
+        <p class="arabic-footer" dir="rtl" lang="ar">نرحب بالطلاب من جميع أنحاء العالم</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>
