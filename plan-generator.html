@@ -499,7 +499,7 @@
             html += `
                 <div class="week-container ${wIndex === 0 ? 'active' : ''}">
                     <div class="week-header">
-                        <h3>${week.title || \`Week \${week.weekNumber}\`}</h3>
+                        <h3>${week.title || 'Week ' + week.weekNumber}</h3>
                     </div>
                     <div class="week-content">
             `;
@@ -516,7 +516,7 @@
                             </div>
                             <div class="meta-info">⏱ ${day.duration} &nbsp;|&nbsp; 🎯 Focus: ${day.focus}</div>
                             <ul class="task-list">
-                                ${day.tasks.map(t => \`<li>\${t}</li>\`).join('')}
+                                ${day.tasks.map(t => '<li>' + t + '</li>').join('')}
                             </ul>
                     `;
 
@@ -529,10 +529,10 @@
                         `;
                     }
 
-                    html += \`</div>\`; // Close day-card
+                    html += '</div>'; // Close day-card
                 });
             } else {
-                html += \`<p class="text-muted">No specific tasks scheduled for this week. Use this time for light review.</p>\`;
+                html += '<p class="text-muted">No specific tasks scheduled for this week. Use this time for light review.</p>';
             }
 
             html += `
@@ -543,8 +543,10 @@
 
         planOutput.innerHTML = html;
         document.getElementById('printBtn').style.display = 'inline-block';
+        if (window.ScoreHighAnalytics) ScoreHighAnalytics.trackPlanGenerated(level, weeksDiff);
     }
 </script>
 
+    <script src="js/analytics.js"></script>
 </body>
 </html>
