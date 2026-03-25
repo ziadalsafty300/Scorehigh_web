@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       // Send the email to the tutor
       const { data, error } = await resend.emails.send({
         from: 'ScoreHigh Forms <onboarding@resend.dev>', // Replace with your verified domain email later
-        to: 'hello@scorehigh.com',
+        to: 'ziadsafty76@gmail.com',
         subject: `New Consultation Request: ${fullName}`,
         html: `
           <h3>New Consultation Request</h3>

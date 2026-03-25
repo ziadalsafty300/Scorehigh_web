@@ -479,11 +479,11 @@
             renderPlan(data);
 
         } catch (err) {
+            console.error("Plan Generation Error:", err);
             planOutput.innerHTML = `
                 <div style="background-color: #fee2e2; color: #b91c1c; padding: 1.5rem; border-radius: 8px; text-align: center; border: 1px solid #f87171;">
                     <h3>Error Generating Plan</h3>
-                    <p>${err.message}</p>
-                    <p style="margin-top: 1rem; font-size: 0.9rem;">Make sure you have added your GEMINI_API_KEY to your Vercel Environment Variables.</p>
+                    <p>Our AI tutor is currently experiencing heavy traffic. Please try generating your plan again in a few moments.</p>
                 </div>
             `;
         } finally {

@@ -98,7 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (err) {
         // Error Feedback
-        formReview.innerHTML = `Error: ${err.message}`;
+        console.error("Contact Form Error:", err);
+        formReview.innerHTML = `We are unable to process your request at this time. Please contact us directly via WhatsApp!`;
         formReview.style.backgroundColor = '#f8d7da';
         formReview.style.color = '#842029';
         formReview.style.display = 'block';
