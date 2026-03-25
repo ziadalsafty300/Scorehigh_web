@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | ScoreHigh Tutoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .auth-container { max-width: 400px; margin: 4rem auto; padding: 2rem; background: var(--white); border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .form-group { margin-bottom: 1.5rem; text-align: left; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--navy); }
+    .form-group input { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; }
+    .error-msg { color: #e74c3c; font-size: 0.9rem; margin-top: 0.5rem; display: none; }
+    .success-msg { color: #2ecc71; font-size: 0.9rem; margin-top: 0.5rem; display: none; }
+  </style>
+</head>
+<body class="bg-light">
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="nav-brand">ScoreHigh</a>
+    </div>
+  </nav>
+
+  <main class="container text-center">
+    <div class="auth-container card">
+      <h1 style="color: var(--navy); margin-bottom: 0.5rem; font-size: 2rem;">Create Account</h1>
+      <p class="text-muted" style="margin-bottom: 2rem;">Join ScoreHigh to generate and save your custom study plans.</p>
+      
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label for="grade">Grade Level</label>
+          <select id="grade" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; background: white;">
+            <option value="">Select Grade</option>
+            <option value="9">Grade 9</option>
+            <option value="10">Grade 10</option>
+            <option value="11">Grade 11</option>
+            <option value="12">Grade 12</option>
+            <option value="graduated">Graduated</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="takenBefore">Taken the Digital SAT before?</label>
+          <select id="takenBefore" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; background: white;" onchange="document.getElementById('scoreGroup').style.display = this.value === 'true' ? 'block' : 'none';">
+            <option value="">Select Option</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="form-group" id="scoreGroup" style="display: none;">
+          <label for="englishScore">Previous English Score</label>
+          <input type="number" id="englishScore" placeholder="e.g. 550" min="200" max="800" step="10">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required placeholder="••••••••" minlength="6">
+        </div>
+        <div id="signup-error" class="error-msg"></div>
+        <div id="signup-success" class="success-msg">Account created! Redirecting...</div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="signupBtn">Sign Up</button>
+      </form>
+      
+      <p style="margin-top: 1.5rem; font-size: 0.95rem;">
+        Already have an account? <a href="login.html" style="color: var(--primary); font-weight: 600;">Log in</a>
+      </p>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const fullName = document.getElementById('fullName').value;
+      const grade = document.getElementById('grade').value;
+      const takenBefore = document.getElementById('takenBefore').value === 'true';
+      const englishScore = document.getElementById('englishScore').value ? parseInt(document.getElementById('englishScore').value) : null;
+      
+      const btn = document.getElementById('signupBtn');
+      const errDiv = document.getElementById('signup-error');
+      const succDiv = document.getElementById('signup-success');
+      
+      btn.innerText = 'Signing up...';
+      btn.disabled = true;
+      errDiv.style.display = 'none';
+      succDiv.style.display = 'none';
+
+      const { data, error } = await supabaseClient.auth.signUp({ 
+        email, 
+        password,
+        options: { 
+          data: { 
+            full_name: fullName,
+            grade: grade,
+            has_taken_before: takenBefore,
+            english_score: englishScore
+          } 
+        }
+      });
+      
+      if (error) {
+        errDiv.innerText = error.message;
+        errDiv.style.display = 'block';
+        btn.innerText = 'Sign Up';
+        btn.disabled = false;
+      } else {
+        succDiv.style.display = 'block';
+        btn.style.display = 'none';
+        setTimeout(() => {
+            window.location.href = 'dashboard.html';
+        }, 1500);
+      }
+    });
+  </script>
+</body>
+</html>

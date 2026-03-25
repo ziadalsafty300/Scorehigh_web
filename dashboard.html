@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard | ScoreHigh Tutoring</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dashboard-header { background: var(--navy); color: var(--white); padding: 3rem 0; text-align: center; }
+    .dashboard-content { padding: 4rem 0; }
+    .plan-card { padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease;}
+    .plan-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .plan-info h3 { color: var(--navy); margin-bottom: 0.25rem; font-size: 1.25rem;}
+    .plan-info p { color: var(--text-muted); font-size: 0.95rem; margin: 0;}
+    .empty-state { text-align: center; padding: 4rem 2rem; background: var(--light-gray); border-radius: 12px; border: 2px dashed #ccc; }
+    #loader { text-align: center; padding: 3rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="nav-brand">ScoreHigh</a>
+      <div class="nav-links">
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+        <a href="plan-generator.html" class="nav-link">AI Plan</a>
+        <!-- Auth links injected via JS -->
+      </div>
+    </div>
+  </nav>
+
+  <header class="dashboard-header">
+    <div class="container">
+      <h1 id="welcomeText">Welcome to your Dashboard</h1>
+      <p style="color: rgba(255,255,255,0.8); margin-top: 0.5rem;">Manage your custom study plans and progress.</p>
+    </div>
+  </header>
+
+  <main class="dashboard-content bg-white">
+    <div class="container" style="max-width: 800px;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.75rem; color: var(--navy);">Saved Study Plans</h2>
+        <a href="plan-generator.html" class="btn btn-primary">+ Generate New Plan</a>
+      </div>
+
+      <div id="loader">Loading your plans...</div>
+      <div id="plansList"></div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-container text-center">
+      <p style="color: rgba(255,255,255,0.7); margin-bottom: 0;">© 2025 ScoreHigh Tutoring. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script>
+    async function initDashboard() {
+      const user = await ScoreHighAuth.checkUser();
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Set Welcome Text
+      const name = user.user_metadata?.full_name?.split(' ')[0] || 'Student';
+      document.getElementById('welcomeText').innerText = `Welcome, ${name}!`;
+
+      // Fetch Plans
+      loadPlans(user.id);
+    }
+
+    async function loadPlans(userId) {
+      const loader = document.getElementById('loader');
+      const plansList = document.getElementById('plansList');
+      
+      const { data, error } = await supabaseClient
+        .from('study_plans')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+
+      loader.style.display = 'none';
+
+      if (error) {
+        plansList.innerHTML = `<p style="color:red;">Error loading plans: ${error.message}</p>`;
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        plansList.innerHTML = `
+          <div class="empty-state">
+            <h3 style="margin-bottom: 1rem; color: var(--navy);">No plans generated yet</h3>
+            <p class="text-muted" style="margin-bottom: 1.5rem;">Head over to the AI Plan Generator to create your first highly-targeted SAT study approach.</p>
+            <a href="plan-generator.html" class="btn btn-primary">Generate Plan</a>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      data.forEach(plan => {
+        const date = new Date(plan.created_at).toLocaleDateString();
+        html += `
+          <div class="plan-card">
+            <div class="plan-info">
+              <h3>${plan.plan_title}</h3>
+              <p>Generated on: ${date}</p>
+            </div>
+            <div>
+               <button class="btn btn-outline" onclick="viewPlan('${plan.id}')">View Plan</button>
+               <button class="btn" style="background:var(--light-gray); color:var(--text); margin-left:0.5rem;" onclick="deletePlan('${plan.id}')">Delete</button>
+            </div>
+          </div>
+        `;
+      });
+      plansList.innerHTML = html;
+    }
+
+    function viewPlan(planId) {
+      // In a real app we would navigate to a viewer page or open a modal.
+      // For simplicity, we can redirect to the generator page with an ID to view it, or open local viewer.
+      alert('Plan Viewer coming soon! For now, your plan is safely saved in the database.');
+    }
+
+    async function deletePlan(planId) {
+      if(confirm('Are you sure you want to delete this study plan?')) {
+        await supabaseClient.from('study_plans').delete().eq('id', planId);
+        window.location.reload();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initDashboard);
+  </script>
+</body>
+</html>
